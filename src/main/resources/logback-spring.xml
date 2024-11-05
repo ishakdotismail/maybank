@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/product.log</file> <!-- Path to the log file -->        
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/product.%d{yyyy-MM-dd}.log</fileNamePattern> 
+            <maxHistory>30</maxHistory> <!-- Keep logs for 30 days -->
+        </rollingPolicy>        
+        <append>true</append> <!-- Append logs instead of overwriting -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%file:%line] - %msg%n</pattern> <!-- Log message format -->
+        </encoder>
+    </appender>
+    <logger name="org.hibernate.SQL" level="debug" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="org.hibernate.orm.jdbc.bind" level="trace" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="org.hibernate.stat" level="debug" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="org.hibernate.SQL_SLOW" level="info" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <logger name="org.hibernate.cache" level="debug" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
